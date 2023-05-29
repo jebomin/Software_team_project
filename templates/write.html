@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>글 작성</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .flash-messages {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        font-size: 14px;
+      }
+
+      input[type="submit"] {
+        padding: 8px 20px;
+        background-color: #4db6ac; /* 청록색 */
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #3b9c96; /* 청록색 (더 진한 버전) */
+      }
+      .button {
+        display: block;
+        width: fit-content;
+        margin: 10px auto;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 3px;
+        background-color: #4db6ac; /* 청록색 */
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 14px;
+        line-height: 1.5;
+        height: 36px;
+      }
+
+      .button:hover {
+        background-color: #3b9c96; /* 청록색 (더 진한 버전) */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>글 작성</h1>
+    <div class="flash-messages">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <script>
+        alert("{{messages[-1]}}");
+      </script>
+      {% endif %} {% endwith %}
+    </div>
+    <table>
+      <form name="form" method="POST" action="/write">
+        <tr>
+          <td>작성자</td>
+          <td>
+            <input
+              type="text"
+              name="name"
+              value="{{ session['name'] }}"
+              readonly
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>제목</td>
+          <td><input type="text" name="title" required /></td>
+        </tr>
+
+        <tr>
+          <td>내용</td>
+          <td><textarea name="contents" required></textarea></td>
+        </tr>
+
+        <tr>
+          <td>코인 개수</td>
+          <td><input type="number" name="coin_count" required /></td>
+        </tr>
+
+        <tr>
+          <td>코인 1개당 가격</td>
+          <td><input type="number" name="coin_price" required /></td>
+        </tr>
+
+        <tr>
+          <td colspan="2"><input type="submit" value="작성" /></td>
+        </tr>
+      </form>
+    </table>
+    <form
+      action="{{ url_for('lists', page=page, search=search, keyword=keyword) }}"
+    >
+      <button class="button" type="submit">코인 게시판</button>
+    </form>
+  </body>
+</html>
