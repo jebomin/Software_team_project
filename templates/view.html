@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        width: 50%;
+      }
+
+      th {
+        background-color: #4db6ac;
+        color: #fff;
+      }
+
+      .info-label {
+        font-weight: bold;
+      }
+
+      .info-value {
+        margin-left: 10px;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 3px;
+        background-color: #4db6ac; /* 청록색 */
+        color: #fff;
+        text-decoration: none;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 14px;
+        line-height: 1.5;
+        height: 36px;
+      }
+
+      .button:hover {
+        background-color: #3b9c96; /* 청록색 (더 진한 버전) */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>{{ result.title }}</h1>
+    <table>
+      <tr>
+        <th style="width: 50%">작성자</th>
+        <td>{{ result.name }}</td>
+      </tr>
+      <tr>
+        <th style="width: 50%">작성일자</th>
+        <td>{{ result.pubdate|formatdatetime }}</td>
+      </tr>
+      <tr>
+        <th style="width: 50%">작성 내용</th>
+        <td>{{ result.contents }}</td>
+      </tr>
+      {% set coin_quantity = result.coin_quantity %} {% set coin_price =
+      result.coin_price %}
+      <tr>
+        <th style="width: 50%">작성자가 등록한 코인의 개수</th>
+        <td>{{ coin_quantity }}</td>
+      </tr>
+      <tr>
+        <th style="width: 50%">코인 가격</th>
+        <td>{{ coin_price }}</td>
+      </tr>
+    </table>
+
+    {% if session["id"] == result.writer_id %}
+    <form action="{{ url_for('board_delete', idx=result.id) }}" method="post">
+      <button class="button" type="submit">글 삭제</button>
+    </form>
+    <form action="{{ url_for('board_edit', idx=result.id) }}" method="post">
+      <button class="button" type="submit">글 수정</button>
+    </form>
+    {% else %}
+    <form
+      action="{{ url_for('board_view', idx=result.id, page=page, search=search, keyword=keyword) }}"
+      method="post"
+    >
+      <button class="button" type="submit">코인 거래하기</button>
+    </form>
+    {% endif %}
+
+    <form
+      action="{{ url_for('lists', page=page, search=search, keyword=keyword) }}"
+    >
+      <button class="button" type="submit">코인 게시판</button>
+    </form>
+  </body>
+</html>
+
+<!--
+  작성자와 로그인된 사용자가 같은 경우에는
+  '글 삭제', '글 수정' 링크가 표시되고
+
+  다른 사용자의 경우 '코인 거래하기' 버튼이
+  표시된다.
+-->
