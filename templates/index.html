@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>코인 거래소</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #c7ecee;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-top: 40px;
+      }
+
+      nav {
+        background-color: #2e64fe;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+      }
+
+      nav ul li {
+        display: inline;
+        margin-right: 10px;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+        color: #ff0;
+      }
+
+      #container {
+        display: flex;
+      }
+
+      #coin-chart-container {
+        flex: 70%;
+        text-align: center;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #coin-chart-container h2 {
+        margin-top: 0;
+      }
+
+      #coin-chart {
+        width: 100%;
+        height: 400px;
+        max-width: 600px; /* 차트 최대 너비 제한 */
+        margin: 0 auto; /* 가운데 정렬 */
+      }
+
+      #user-info {
+        flex: 30%;
+        color: #333;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #user-info p {
+        margin: 0;
+        padding: 5px;
+      }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <h1>코인 거래소</h1>
+    <nav>
+      <ul>
+        <li><a href="/join">회원가입</a></li>
+        <li><a href="/login_1">로그인</a></li>
+        <li><a href="/logout">로그아웃</a></li>
+        <li><a href="/list">코인거래게시판</a></li>
+        <li><a href="/account">계좌</a></li>
+        <li><a href="/coin_exchange">코인구매</a></li>
+      </ul>
+    </nav>
+    <div id="coin-chart-container">
+      <h2>코인 가격 추이</h2>
+      <canvas id="coin-chart"></canvas>
+    </div>
+
+    <!-- Chart.js 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 스크립트 -->
+    <script>
+      // 코인 가격 데이터 (예시)
+      var coinPrices = {{ coin_prices|safe }};
+
+      // 코인 가격 변동 추이 차트 생성
+      var ctx = document.getElementById('coin-chart').getContext('2d');
+      var coinChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+              datasets: [{
+                  label: 'Coin Price',
+                  data: coinPrices,
+                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                  borderColor: 'rgba(0, 123, 255, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+    </script>
+
+    <div id="user-info">
+      {% if session.get('name') and session.get('email') %}
+      <p><strong>이름:</strong> {{ session['name'] }}</p>
+      <p><strong>이메일:</strong> {{ session['email'] }}</p>
+      <p><strong>보유 코인 개수:</strong> {{ coin_count }}</p>
+      <p><strong>계좌 잔액:</strong> {{ account }}</p>
+      {% else %}
+      <p>로그인되지 않았습니다</p>
+      {% endif %}
+    </div>
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <script>
+      alert("{{ messages[-1] }}");
+    </script>
+    {% endif %} {% endwith %}
+  </body>
+</html>
