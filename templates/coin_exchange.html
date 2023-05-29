@@ -1,0 +1,110 @@
+{% with messages = get_flashed_messages() %} {% if messages %}
+<script>
+  alert("{{ messages[-1] }}");
+</script>
+{% endif %} {% endwith %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #00bfa5; /* Mint */
+      }
+
+      p {
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+        color: #333;
+      }
+
+      input[type="number"] {
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        width: 100px;
+        background-color: #dfe6e9;
+      }
+
+      button[type="submit"] {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: #00bfa5; /* Mint */
+        color: #fff;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #00897b; /* Dark Mint */
+      }
+
+      .home-button {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .home-button a {
+        display: inline-block;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: #00bfa5; /* Mint */
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .home-button a:hover {
+        background-color: #00897b; /* Dark Mint */
+      }
+    </style>
+    <title>코인구매</title>
+  </head>
+  <body>
+    <h1>코인구매</h1>
+    <p>현재 코인 1개당 가격: {{ coin.price }}원</p>
+    <p>남은 코인 수량: {{ coin.quantity }}개</p>
+
+    <form action="{{ url_for('buy_coin') }}" method="POST">
+      <label for="amount">구매 수량:</label>
+      <input
+        type="number"
+        name="amount"
+        id="amount"
+        min="1"
+        max="{{ coin.quantity }}"
+        required
+      />
+      <input type="hidden" name="coin_id" value="{{ coin._id }}" />
+      <button type="submit">코인 구매</button>
+    </form>
+
+    <form action="{{ url_for('update_price') }}" method="POST">
+      <button type="submit">코인 가격 갱신하기</button>
+    </form>
+
+    <div class="home-button">
+      <a href="/">홈으로 돌아가기</a>
+    </div>
+  </body>
+</html>
