@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>계좌</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #00bfa5;
+      }
+
+      form {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"] {
+        width: 200px;
+        padding: 5px;
+        background-color: #dfe6e9;
+        border: 1px solid #8395a7;
+        border-radius: 3px;
+      }
+
+      input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4db6ac;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+        width: 200px;
+      }
+
+      .home-link {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .home-link a.button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4db6ac;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>계좌</h1>
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <script>
+      alert("{{ messages[-1] }}");
+    </script>
+    {% endif %} {% endwith %}
+
+    <form action="/deposit" method="POST">
+      <label for="amount">금액을 입력하세요:</label>
+      <input
+        type="text"
+        id="amount"
+        name="amount"
+        placeholder="금액을 입력하세요"
+      />
+      <input type="submit" value="계좌에 넣기" />
+    </form>
+
+    <form action="/withdraw" method="POST">
+      <label for="amount">금액을 입력하세요:</label>
+      <input
+        type="text"
+        id="amount"
+        name="amount"
+        placeholder="금액을 입력하세요"
+      />
+      <input type="submit" value="계좌에서 빼기" />
+    </form>
+
+    <div class="home-link">
+      <a href="/" class="button">홈으로 돌아가기</a>
+    </div>
+  </body>
+</html>
