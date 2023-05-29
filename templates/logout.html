@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-success">
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 로그아웃 후에 보여줄 내용 -->
+    <h1>로그아웃 되었습니다.</h1>
+    <p>홈 페이지로 돌아가려면 <a href="{{ url_for('home') }}">여기를 클릭하세요</a>.</p>
+  </div>
+{% endblock %}
