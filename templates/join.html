@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+
+      table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      caption {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        background-color: #4db6ac;
+        color: #fff;
+      }
+
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 90%;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        background-color: #e0f2f1;
+      }
+
+      input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4db6ac;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #3b9c96;
+      }
+
+      .home-link {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .home-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4db6ac;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .home-button:hover {
+        background-color: #3b9c96;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <form name="form" action="/join" method="POST">
+        <caption>
+          회원가입
+        </caption>
+        <tbody>
+          <tr>
+            <td>이름</td>
+            <td><input type="text" name="name" /></td>
+          </tr>
+          <tr>
+            <td>이메일</td>
+            <td><input type="text" name="email" /></td>
+          </tr>
+          <tr>
+            <td>비밀번호</td>
+            <td><input type="password" name="pass" /></td>
+          </tr>
+          <tr>
+            <td>비밀번호 확인</td>
+            <td><input type="password" name="pass2" /></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="submit" value="가입하기" /></td>
+          </tr>
+        </tbody>
+      </form>
+    </table>
+
+    <div class="home-link">
+      <a href="/" class="home-button">홈으로 돌아가기</a>
+    </div>
+  </body>
+</html>
