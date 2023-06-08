@@ -1,86 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        margin: 0;
-        padding: 20px;
-        text-align: center;
-      }
-
-      table {
-        width: 400px;
-        margin: 0 auto;
-        background-color: #a5d6a7; /* Light Mint */
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 20px;
-      }
-
-      td {
-        padding: 10px;
-      }
-
-      input[type="text"],
-      textarea {
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        width: 100%;
-        background-color: #fff;
-        resize: vertical;
-      }
-
-      input[type="submit"] {
-        padding: 5px 10px;
-        border: none;
-        border-radius: 3px;
-        background-color: #00bfa5; /* Mint */
-        color: #fff;
-        cursor: pointer;
-      }
-
-      input[type="submit"]:hover {
-        background-color: #00897b; /* Dark Mint */
-      }
-    </style>
-  </head>
-
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 편집</title>
+</head>
+<body>
     <table>
-      <form name="form" method="POST" action="/edit/{{data._id}}">
+        <form name="form" method="POST" action="/edit/{{data._id}}">
         <tr>
-          <td>작성자</td>
-          <td>
-            <input
-              type="text"
-              name="name"
-              value="{{session['name']}}"
-              readonly
-            />
-          </td>
-          <!-- 작성자 이름은 로그인한 이름으로 강제-->
+            <td>작성자</td>
+            <td><input type="text" name="name" value="{{session['name']}}" readonly></td> <!-- 작성자 이름은 로그인한 이름으로 강제-->
         </tr>
 
         <tr>
-          <td>제목</td>
-          <td><input type="text" name="title" value="{{data.title}}" /></td>
+            <td>제목</td>
+            <td><input type="text" name="title" value="{{data.title}}"></td>
         </tr>
 
         <tr>
-          <td>내용</td>
-          <td><textarea name="contents">{{data.contents}}</textarea></td>
+            <td>내용</td>
+            <td><textarea name="contents">{{data.contents}}</textarea></td>
+
         </tr>
         <tr>
-          <td colspan="2"><input type="submit" /></td>
+            <td colspan="2"><input type="submit"></td>
         </tr>
-      </form>
+        </form>
+
+        
     </table>
-  </body>
+    
+</body>
 </html>

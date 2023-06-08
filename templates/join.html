@@ -80,6 +80,11 @@
     </style>
   </head>
   <body>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <script>
+      alert("{{ messages[-1] }}");
+    </script>
+    {% endif %} {% endwith %}
     <table>
       <form name="form" action="/join" method="POST">
         <caption>

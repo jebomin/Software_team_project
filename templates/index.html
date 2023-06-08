@@ -1,155 +1,313 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>코인 거래소</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #c7ecee;
-        margin: 0;
-        padding: 0;
-      }
+<html lang="en">
 
-      h1 {
-        text-align: center;
-        color: #333;
-        margin-top: 40px;
-      }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-      nav {
-        background-color: #2e64fe;
-        color: #fff;
-        padding: 10px;
-        text-align: center;
-      }
+  <title>코인 거래소</title>
 
-      nav ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        display: inline-block;
-      }
+  <!-- Custom fonts for this template -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" type="text/css">
 
-      nav ul li {
-        display: inline;
-        margin-right: 10px;
-      }
+  <!-- Custom styles for this template -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.min.css" rel="stylesheet">
 
-      nav ul li a {
-        color: #fff;
-        text-decoration: none;
-      }
+  <!-- Custom styles for this page -->
+  <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-      nav ul li a:hover {
-        text-decoration: underline;
-        color: #ff0;
-      }
+</head>
 
-      #container {
-        display: flex;
-      }
+<body id="page-top">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <script>
+        alert("{{ messages[-1] }}");
+      </script>
+    {% endif %}
+  {% endwith %}
 
-      #coin-chart-container {
-        flex: 70%;
-        text-align: center;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
+  <!-- Page Wrapper -->
+  <div id="wrapper">
 
-      #coin-chart-container h2 {
-        margin-top: 0;
-      }
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      #coin-chart {
-        width: 100%;
-        height: 400px;
-        max-width: 600px; /* 차트 최대 너비 제한 */
-        margin: 0 auto; /* 가운데 정렬 */
-      }
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">코인 거래소</div>
+      </a>
 
-      #user-info {
-        flex: 30%;
-        color: #333;
-        background-color: #fff;
-        padding: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
 
-      #user-info p {
-        margin: 0;
-        padding: 5px;
-      }
-    </style>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  </head>
-  <body>
-    <h1>코인 거래소</h1>
-    <nav>
-      <ul>
-        <li><a href="/join">회원가입</a></li>
-        <li><a href="/login_1">로그인</a></li>
-        <li><a href="/logout">로그아웃</a></li>
-        <li><a href="/list">코인거래게시판</a></li>
-        <li><a href="/account">계좌</a></li>
-        <li><a href="/coin_exchange">코인구매</a></li>
-      </ul>
-    </nav>
-    <div id="coin-chart-container">
-      <h2>코인 가격 추이</h2>
-      <canvas id="coin-chart"></canvas>
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Coin Marketplace</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>메뉴</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">메뉴 목록:</h6>
+            <a class="collapse-item" href="/join">회원가입</a>
+            <a class="collapse-item" href="/login_1">로그인</a>
+            <a class="collapse-item" href="/logout">로그아웃</a>
+            <a class="collapse-item" href="/list">코인 거래 게시판</a>
+            <a class="collapse-item" href="/account">계좌</a>
+            <a class="collapse-item" href="/coin_exchange">코인 거래소</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session['name'] }}</span>
+                <img class="img-profile rounded-circle" src="https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  프로필
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  설정
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  로그아웃
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Coin Marketplace</h1>
+
+          <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">코인 가격 변동 추이</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="coin-chart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Column -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <p><strong>이름:</strong> {% if session['name'] is not none %}{{ session['name'] }}{% else %}&nbsp;{% endif %}</p>
+                  <p><strong>이메일:</strong> {% if session['email'] is not none %}{{ session['email'] }}{% else %}&nbsp;{% endif %}</p>
+                  <p><strong>보유 코인 개수:</strong> {% if coin_count is not none %}{{ coin_count }}{% else %}&nbsp;{% endif %}</p>
+                  <p><strong>계좌 잔액:</strong> {% if account is not none %}{{ account }}{% else %}&nbsp;{% endif %}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="text-center">
+            <span>코인 거래소 &copy; 2023</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
     </div>
+    <!-- End of Content Wrapper -->
 
-    <!-- Chart.js 라이브러리 추가 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </div>
+  <!-- End of Page Wrapper -->
 
-    <!-- 스크립트 -->
-    <script>
-      // 코인 가격 데이터 (예시)
-      var coinPrices = {{ coin_prices|safe }};
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
-      // 코인 가격 변동 추이 차트 생성
-      var ctx = document.getElementById('coin-chart').getContext('2d');
-      var coinChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-              labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-              datasets: [{
-                  label: 'Coin Price',
-                  data: coinPrices,
-                  backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                  borderColor: 'rgba(0, 123, 255, 1)',
-                  borderWidth: 1
-              }]
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">정말 로그아웃 하시겠습니까?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+          <a class="btn btn-primary" href="/logout">로그아웃</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/js/demo/datatables-demo.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // 코인 가격 데이터 (예시)
+    var coinPrices = {{ coin_prices|safe }};
+    var currentTime = new Date().toLocaleTimeString();
+    // 코인 가격 변동 추이 차트 생성
+    var ctx = document.getElementById('coin-chart').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1', '2', '3', '4', '5', '6', '7'],
+        datasets: [{
+          label: '가격 (원)',
+          data: coinPrices,
+          backgroundColor: 'rgba(78, 115, 223, 0.05)',
+          borderColor: 'rgba(78, 115, 223, 1)',
+          pointRadius: 3,
+          pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+          pointBorderColor: 'rgba(78, 115, 223, 1)',
+          pointHoverRadius: 3,
+          pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
+          pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
+          pointHitRadius: 10,
+          pointBorderWidth: 2,
+          borderWidth: 2,
+          lineTension: 0.5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            display: true,
+            grid: {
+              display: false
+            }
           },
-          options: {
-              responsive: true,
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
+          y: {
+            display: true,
+            grid: {
+              display: true,
+              color: '#e9e9eb'
+            },
+            ticks: {
+              beginAtZero: true
+            }
           }
-      });
-    </script>
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += tooltipItem.yLabel.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              });
+              return label;
+            }
+          }
+        }
+      }
+    });
+  </script>
 
-    <div id="user-info">
-      {% if session.get('name') and session.get('email') %}
-      <p><strong>이름:</strong> {{ session['name'] }}</p>
-      <p><strong>이메일:</strong> {{ session['email'] }}</p>
-      <p><strong>보유 코인 개수:</strong> {{ coin_count }}</p>
-      <p><strong>계좌 잔액:</strong> {{ account }}</p>
-      {% else %}
-      <p>로그인되지 않았습니다</p>
-      {% endif %}
-    </div>
+</body>
 
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <script>
-      alert("{{ messages[-1] }}");
-    </script>
-    {% endif %} {% endwith %}
-  </body>
 </html>
