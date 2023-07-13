@@ -1,4 +1,4 @@
-# Software_team_project
+# 🖥️ Software_team_project
 2023 소프트웨어 공학 및 설계 프로젝트
 
 ### 📌소개
